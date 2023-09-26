@@ -1,54 +1,89 @@
-// Function to fetch data from the API
-const get_api_works = async () => {
+// Function to set the active button
+const setActiveButton = (button) => {
+  const filterButtons = document.querySelectorAll(".button-filter");
+  filterButtons.forEach((btn) => btn.classList.remove("active"));
+  button.classList.add("active");
+  activeButton = button;
+};
+
+// Function to fetch works data from the API
+const getWorksData = async () => {
   try {
-    // Send a GET request to the specified URL
     const response = await fetch("http://localhost:5678/api/works");
-
-    // Parse the response as JSON
     const data = await response.json();
-
-    // Return the retrieved data
     return data;
   } catch (error) {
-    // Handle and log any errors that occur during the process
     console.log(error);
   }
 };
 
-// Call the get_api_works function
-get_api_works()
-  .then((data) => {
-    // Log a success message along with the retrieved data
-    console.log("Data retrieved successfully:", data);
-  })
-  .catch((error) => {
-    // Log an error message along with the error details
-    console.error("An error occurred:", error);
-  });
-
-// Function to fetch data from the API
-const get_api_categories = async () => {
+// Function to fetch categories data from the API
+const getCategoriesData = async () => {
   try {
-    // Send a GET request to the specified URL
     const response = await fetch("http://localhost:5678/api/categories");
-
-    // Parse the response as JSON
     const data = await response.json();
-
-    // Return the retrieved data
     return data;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
+// Function to render the gallery
+const renderGallery = (items) => {
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
+  items.forEach((item) => {
+    const galleryItem = document.createElement("div");
+    galleryItem.classList.add("box");
+    gallery.appendChild(galleryItem);
+    galleryItem.innerHTML = `
+      <img src="${item.imageUrl}" alt="${item.title}" class="item__img">
+      <h3 class="item__title">${item.title}</h3>
+    `;
+  });
+};
+
+// Function to filter works by category
+const filterWorksByCategory = async (category, worksData) => {
+  try {
+    const allData = await getWorksData();
+    const filteredData = allData.filter((data) =>
+      category === "Tous" ? true : data.categoryId === category.id
+    );
+    renderGallery(filteredData);
   } catch (error) {
     console.log(error);
   }
 };
 
-// Call the get_api_categories function
-get_api_categories()
-  .then((data) => {
-    // Log a success message along with the retrieved data
-    console.log("Data retrieved successfully:", data);
-  })
-  .catch((error) => {
-    // Log an error message along with the error details
-    console.error("An error occurred:", error);
-  });
+// Initialize the gallery with all works and setup filtering
+Promise.all([getWorksData(), getCategoriesData()]).then(
+  ([worksData, categories]) => {
+    const allCategoriesButton = document.querySelector("#all-filter");
+    const buttonsContainer = document.querySelector("#js-filter-box");
+
+    // Create a variable to keep track of the active button
+    let activeButton = allCategoriesButton;
+
+    allCategoriesButton.addEventListener("click", () => {
+      renderGallery(worksData);
+      setActiveButton(allCategoriesButton);
+    });
+
+    categories.forEach((category) => {
+      const button = document.createElement("button");
+      button.innerText = category.name;
+      button.classList.add("button-filter");
+      button.addEventListener("click", () => {
+        filterWorksByCategory(category, worksData);
+        setActiveButton(button);
+      });
+      buttonsContainer.appendChild(button);
+
+      // Initialize the active button as the "All" button
+      if (category.name === "Tous") {
+        activeButton = button;
+      }
+    });
+  }
+);
