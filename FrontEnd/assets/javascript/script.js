@@ -3,7 +3,6 @@ const setActiveButton = (button) => {
   const filterButtons = document.querySelectorAll(".button-filter");
   filterButtons.forEach((btn) => btn.classList.remove("active"));
   button.classList.add("active");
-  activeButton = button;
 };
 
 // Function to fetch works data from the API
@@ -44,7 +43,7 @@ const renderGallery = (items) => {
 };
 
 // Function to filter works by category
-const filterWorksByCategory = async (category, worksData) => {
+const filterWorksByCategory = async (category) => {
   try {
     const allData = await getWorksData();
     const filteredData = allData.filter((data) =>
@@ -61,10 +60,6 @@ Promise.all([getWorksData(), getCategoriesData()]).then(
   ([worksData, categories]) => {
     const allCategoriesButton = document.querySelector("#all-filter");
     const buttonsContainer = document.querySelector("#js-filter-box");
-
-    // Create a variable to keep track of the active button
-    let activeButton = allCategoriesButton;
-
     allCategoriesButton.addEventListener("click", () => {
       renderGallery(worksData);
       setActiveButton(allCategoriesButton);
@@ -79,11 +74,6 @@ Promise.all([getWorksData(), getCategoriesData()]).then(
         setActiveButton(button);
       });
       buttonsContainer.appendChild(button);
-
-      // Initialize the active button as the "All" button
-      if (category.name === "Tous") {
-        activeButton = button;
-      }
     });
   }
 );
