@@ -5,12 +5,20 @@ const setActiveButton = (button) => {
   button.classList.add("active");
 };
 
+let worksData = [];
+
 // Function to fetch works data from the API
 const getWorksData = async () => {
   try {
-    const response = await fetch("http://localhost:5678/api/works");
-    const data = await response.json();
-    return data;
+    if (worksData.length > 0) {
+      // Si les données sont déjà disponibles localement, renvoyez-les.
+      return worksData;
+    } else {
+      const response = await fetch("http://localhost:5678/api/works");
+      const data = await response.json();
+      worksData = data; // Stockez les données localement
+      return data;
+    }
   } catch (error) {
     console.log(error);
   }
