@@ -6,45 +6,54 @@ const isLogged = () => (token ? true : false);
 
 // Function to log the user out
 const logOut = () => {
-  localStorage.removeItem("authToken"); // Clear the authToken from localStorage
-  window.location.reload(); // Reload the page after logout
+  localStorage.removeItem("authToken");
+  window.location.reload();
 };
 
 // Function to update the login/logout button
 const loginButtonUpdate = () => {
   const loginButton = document.querySelector("#js-login-button");
+
   if (isLogged()) {
-    loginButton.href = "#"; // Set the link to "#" to prevent navigation
-    loginButton.innerText = "logout"; // Change the button text to "logout"
+    loginButton.href = "#";
+    loginButton.innerText = "logout";
     loginButton.addEventListener("click", () => {
-      logOut(); // Call the logOut function when the button is clicked
-      loginButton.innerText = "login"; // Change the button text back to "login"
+      logOut();
+      loginButton.innerText = "login";
     });
   }
 };
-// Call the loginButtonUpdate function to update the button state
+
 loginButtonUpdate();
 
 // Update the user interface based on the user's login status
 const updateUI = () => {
-  // Select relevant HTML elements
   const filter = document.querySelector("#js-filter-box");
   const editBar = document.querySelector("#js-banner");
   const alignItems = document.querySelector("#introduction");
+  const buttonEditGallery = document.querySelector("#js-button-edit-gallery");
 
-  // Check if the user is logged in
   if (isLogged()) {
-    // If logged in, hide the filter and display the editBar
     filter.style.display = "none";
     editBar.style.display = "flex";
     alignItems.style.alignItems = "inherit";
+    buttonEditGallery.style.display = "inline-flex";
   }
 };
 
 // Call the function to update the user interface when the page is loaded
 window.addEventListener("load", () => {
-  // Call loginButtonUpdate to handle login/logout button state
   loginButtonUpdate();
-  // Call updateUI to update the interface based on the user's login status
   updateUI();
 });
+
+// open and close modal
+function openModal() {
+  document.querySelector(".overlay").style.display = "block";
+  document.querySelector(".modal").classList.add("modal-open");
+}
+
+function closeModal() {
+  document.querySelector(".overlay").style.display = "none";
+  document.querySelector(".modal").classList.remove("modal-open");
+}

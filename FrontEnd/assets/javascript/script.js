@@ -11,12 +11,11 @@ let worksData = [];
 const getWorksData = async () => {
   try {
     if (worksData.length > 0) {
-      // Si les données sont déjà disponibles localement, renvoyez-les.
       return worksData;
     } else {
       const response = await fetch("http://localhost:5678/api/works");
       const data = await response.json();
-      worksData = data; // Stockez les données localement
+      worksData = data;
       return data;
     }
   } catch (error) {

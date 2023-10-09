@@ -211,6 +211,7 @@ nav li {
 #introduction article {
   flex: 1;
 }
+
 #introduction h2 {
   margin-bottom: 1em;
 }
@@ -218,10 +219,12 @@ nav li {
 #introduction p {
   margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
 }
+
 .gallery {
   width: 100%;
   display: grid;
@@ -379,4 +382,111 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+
+/* button-admin */
+.wrapper-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 2rem;
+}
+
+.button-admin {
+  display: none;
+  background: none;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  font-size: 1rem;
+  gap: 0.5em;
+  font-family: "Work Sans";
+  font-style: normal;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.icon-pencil {
+  height: 22px;
+  width: 22px;
+}
+
+.button-admin:hover {
+  color: #b1663c;
+}
+
+.button-admin:hover img {
+  filter: invert(40%) sepia(62%) saturate(466%) hue-rotate(338deg)
+    brightness(98%) contrast(92%);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  height: 600px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: none;
+  z-index: 1000;
+}
+
+.modal-open {
+  display: block;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+  border: none;
+  background-color: white;
+}
+
+.modal-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.modal-close:hover {
+  transform: rotate(180deg);
+}
+
+.modal-title {
+  font-size: 1.625rem;
+  text-align: center;
+  padding-block: 2.5rem;
+}
+
+.modal-button {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+  border-radius: 60px;
+  transition: background-color 0.1s ease;
+  height: 35px;
+  font-size: 1em;
+  border: none;
 }
