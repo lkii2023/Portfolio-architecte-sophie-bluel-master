@@ -422,6 +422,7 @@ footer nav ul {
     brightness(98%) contrast(92%);
 }
 
+/* modal */
 .overlay {
   position: fixed;
   top: 0;
@@ -430,6 +431,7 @@ footer nav ul {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
+  backdrop-filter: blur(3px);
 }
 
 .modal {
@@ -476,11 +478,13 @@ footer nav ul {
 }
 
 .modal-button {
+  display: flex;
+  justify-content: center;
   font-family: "Syne";
   font-weight: 700;
   color: white;
   background-color: #1d6154;
-  margin: 2em auto;
+  margin: 4.3em auto;
   padding: 10px;
   width: 250px;
   text-align: center;
@@ -489,4 +493,51 @@ footer nav ul {
   height: 35px;
   font-size: 1em;
   border: none;
+}
+
+.modal-body {
+  width: 100%;
+  position: relative;
+  padding: 0 50px;
+  flex-wrap: nowrap;
+}
+
+.gallery-modal {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow: auto;
+}
+
+.img-modal {
+  position: relative;
+}
+
+.item__imgModal {
+  max-width: 95px;
+  max-height: 115px;
+  object-fit: contain;
+  position: relative;
+}
+
+.gallery-modal .box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.svg-trash {
+  background: black;
+  border-radius: 0.2em;
+  border: none;
+  color: white;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  top: 5%;
+  right: 7%;
+  position: absolute;
 }
