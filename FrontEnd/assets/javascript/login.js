@@ -40,7 +40,7 @@ form.addEventListener("submit", async (e) => {
 
         localStorage.setItem("authToken", data.token);
 
-        window.location.href = "http://127.0.0.1:5501/index.html";
+        window.location.href = "index.html";
         break;
 
       case 401:

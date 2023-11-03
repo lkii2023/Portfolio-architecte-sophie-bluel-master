@@ -184,7 +184,7 @@ document
     const fileInput = event.target;
     const imagePreview = document.querySelector(".preview-img");
     const deleteImageBtn = document.querySelector(".preview-delete-btn"); // Sélectionnez le bouton de suppression
-
+    console.log(fileInput.files, "toto");
     if (fileInput.files && fileInput.files[0]) {
       const reader = new FileReader();
 
@@ -330,7 +330,7 @@ formAddImg.addEventListener("submit", async (event) => {
       console.log("postok");
       if (response.ok) {
         // Réinitialisez le formulaire et cachez la modale
-        formAddImg.reset();
+
         modalAdd.style.display = "none";
         console.log("file-input", fileInput.files[0]);
         if (fileInput.files.length > 0) {
@@ -347,10 +347,10 @@ formAddImg.addEventListener("submit", async (event) => {
           }
 
           // Ajoutez newImage à la galerie principale
-          const gallery = document.querySelector("gallery");
+          const gallery = document.querySelector(".gallery");
           gallery.appendChild(newImage);
 
-          const modalGallery = document.querySelector("gallery-modal");
+          const modalGallery = document.querySelector(".gallery-modal");
           modalGallery.appendChild(newImage);
         } else {
           console.error("Aucun fichier sélectionné");
@@ -363,6 +363,7 @@ formAddImg.addEventListener("submit", async (event) => {
       console.error("Erreur lors de l'envoi du projet au serveur : " + error);
     }
   }
+  formAddImg.reset();
 });
 
 // Ajoutez un gestionnaire d'événements aux champs d'entrée
