@@ -14,35 +14,147 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <div class="overlay"></div>
-    <div class="modal">
-      <button onclick="closeModal()" class="modal-close">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="{1.5}"
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-      <div class="modal-header">
-        <h2 class="modal-title">Galerie Photo</h2>
-      </div>
-      <div class="modal-body">
-        <div class="gallery-modal"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-button">Ajouter une photo</button>
+    <div class="modal-container">
+      <div class="overlay">
+        <div class="modal" id="modal1">
+          <button onclick="closeModal()" class="modal-close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="{1.5}"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <div class="modal-header">
+            <h2 class="modal-title">Galerie Photo</h2>
+          </div>
+          <div class="modal-body">
+            <div class="gallery-modal"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-button">Ajouter une photo</button>
+          </div>
+        </div>
+
+        <div class="modal" id="modal2">
+          <button
+            id="backToGallery"
+            onclick="backToGallery()"
+            class="modal-previous"
+          >
+            <svg
+              width="21"
+              height="15"
+              viewBox="0 0 21 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20.3459 6.91164H2.14392L7.58919 1.48731C7.84495 1.23155 7.84495 0.817527 7.58919 0.562423C7.33343 0.306666 6.9194 0.306666 6.6643 0.562423L0.188882 7.03724C-0.0629605 7.28908 -0.0629605 7.71028 0.188882 7.96213L6.66436 14.4376C6.92011 14.6934 7.33414 14.6934 7.58924 14.4376C7.845 14.1818 7.845 13.7678 7.58924 13.5127L2.14392 8.21979H20.3459C20.7069 8.21979 20.9999 7.92673 20.9999 7.56571C20.9999 7.2047 20.7069 6.91164 20.3459 6.91164Z"
+                fill="black"
+              />
+            </svg>
+          </button>
+          <button onclick="closeModal()" class="modal-close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="{1.5}"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+          <form id="js-form-add-img" method="POST" class="form-add-img">
+            <div id="drop-zone" class="drop-zone">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+              <label for="file-input" hidden>Photo :</label>
+              <input
+                type="file"
+                id="file-input"
+                accept="image/png, image/jpeg"
+                name="image"
+                style="display: none"
+              />
+              <button
+                type="button"
+                onclick="document.getElementById('file-input').click();"
+                class="button-upload-photo"
+              >
+                + Ajouter photo
+              </button>
+              <p id="text-format-img">jpg, png : 4mo max</p>
+              <img
+                id="preview"
+                src="#"
+                alt="Preview"
+                style="display: none"
+                class="preview-img"
+              />
+              <button
+                class="preview-delete-btn"
+                aria-label="delete"
+                id="js-delete-preview"
+              >
+                <img src="./assets/icons/trash.svg" alt="delete" />
+              </button>
+            </div>
+            <label for="titre">Titre</label>
+            <input
+              type="text"
+              name="title"
+              id="titre"
+              class="title-form-add-photo bordertitle-error"
+            />
+            <label for="categorie">Catégorie</label>
+            <select name="category" id="categorie" class="title-form-add-photo">
+              <option
+                class="empty-option"
+                id="empty-option"
+                value=""
+                disabled
+                selected=""
+              >
+                Choisissez une categorie
+              </option>
+            </select>
+            <p class="error-title-form">Erreur: Titre obligatoire !</p>
+            <div class="second-bar-modal"></div>
+
+            <button type="submit" class="confirm-button-form-add">
+              Valider
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-
     <div class="banner" id="js-banner">
       <svg
         xmlns="http://www.w3.org/2000/svg"

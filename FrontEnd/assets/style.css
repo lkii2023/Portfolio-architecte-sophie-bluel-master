@@ -411,6 +411,7 @@ footer nav ul {
 .icon-pencil {
   height: 22px;
   width: 22px;
+  z-index: -1000;
 }
 
 .button-admin:hover {
@@ -450,6 +451,7 @@ footer nav ul {
 
 .modal-open {
   display: block;
+  z-index: 1000;
 }
 
 .modal-close {
@@ -493,6 +495,11 @@ footer nav ul {
   height: 35px;
   font-size: 1em;
   border: none;
+  cursor: pointer;
+}
+
+.modal-button:hover {
+  background-color: #a7a7a7;
 }
 
 .modal-body {
@@ -540,4 +547,187 @@ footer nav ul {
   top: 5%;
   right: 7%;
   position: absolute;
+}
+
+/* form add image  */
+.modal-previous {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.empty-option {
+  color: white;
+}
+
+.form-add-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+  padding-top: 40px;
+  margin: auto;
+}
+
+.title-form-add-photo {
+  width: 100%;
+  padding-block: 1rem;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.second-bar-modal {
+  height: 1px;
+  width: 100%;
+  background: #b3b3b3;
+  margin-block: 5%;
+}
+.backToGallery {
+  width: fit-content;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  top: 3.5%;
+  left: 3%;
+  border: none;
+}
+
+.back-to-gallery:hover {
+  color: #b1663c;
+}
+.confirm-button-form-add {
+  align-self: center;
+  font-family: "Syne";
+  font-size: 0.875rem;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 0.5em 6em;
+  background-color: #a7a7a7;
+  color: white;
+  border-radius: 2em;
+  font-family: "Syne";
+
+  cursor: pointer;
+}
+.confirm-button-form-add.active {
+  background-color: #1d6154;
+}
+
+.title-form-add-photo:after {
+  content: "";
+  display: inline-block;
+  margin-left: 0.5rem;
+  width: 0;
+  height: 0;
+  border-top: 0.3rem solid transparent;
+  border-bottom: 0.3rem solid transparent;
+  border-left: 0.3rem solid #333333;
+  vertical-align: middle;
+  transition: transform 0.2s ease-out;
+}
+
+.dropdown:hover .dropbtn:after {
+  transform: rotate(90deg);
+}
+
+.preview-img {
+  width: auto;
+  height: 169px;
+  position: absolute;
+  object-fit: contain;
+}
+
+/* drop zone style */
+.drop-zone {
+  width: 100%;
+  height: 169px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #e8f1f7;
+  gap: 0.25em;
+  position: relative;
+}
+
+.button-upload-photo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 0.6em 2em;
+  color: #306685;
+  background-color: #cbd6dc;
+  border: none;
+  border-radius: 2em;
+  cursor: pointer;
+
+  font-family: "Work Sans";
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+.button-upload-photo:hover {
+  background-color: #306685;
+  color: white;
+}
+.drop-zone svg {
+  width: 65px;
+  height: auto;
+  color: #b9c5cc;
+  margin-bottom: 0.75rem;
+}
+
+.drop-zone p {
+  font-family: "Work Sans";
+  font-size: 0.625rem;
+  color: #444444;
+}
+
+.preview-delete-btn {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: #306685;
+  border-radius: 0.3em;
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 6%;
+  right: 5%;
+}
+
+.preview-delete-btn img {
+  height: 15px;
+  width: 15px;
+  align-self: center;
+}
+
+.preview-delete-btn:hover {
+  background: #d65353;
+}
+
+/* erreur titre */
+.error-title-form {
+  display: none;
+}
+
+.error-title-form.active {
+  display: block;
+  color: #d65353;
+  font-size: 1rem;
+  font-family: "Work Sans";
+  font-weight: 700;
+  text-align: center;
+}
+
+.bordertitle-error.active {
+  border: 1px solid #d65353;
 }
