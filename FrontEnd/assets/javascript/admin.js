@@ -105,9 +105,13 @@ async function deleteWorkOnServer(id) {
         "Erreur lors de la suppression du travail sur le serveur."
       );
     }
+    const galleryItem = document.querySelector(`.img-modal[id="${id}"]`);
+    console.log("gallery ok");
 
-    galleryItem.value = "";
-    image.style.display = "none";
+    if (galleryItem) {
+      galleryItem.remove(); // Supprimez l'élément parent (l'image) du DOM
+      console.log("dom ok");
+    }
   } catch (error) {
     console.error(
       "Erreur lors de la suppression du travail sur le serveur : " + error
@@ -141,7 +145,7 @@ const createTrashSVG = () => {
   svg.addEventListener("click", () => {
     // Obtenez la référence à l'élément parent (le contenant de l'image) de l'icône trash
     const galleryItem = svg.parentElement;
-
+    console.log(galleryItem);
     // Supprimez l'élément parent (l'image) du DOM
     galleryItem.remove();
   });
@@ -200,59 +204,6 @@ document
     }
   });
 
-// Gestionnaire d'événements pour le bouton de suppression
-const deleteImageBtn = document.querySelector(".preview-delete-btn");
-const fileInputModal2 = document.querySelector(".file-input");
-const imagePreviewModal2 = document.querySelector(".preview-img");
-
-async function deleteWorkOnServer(id) {
-  try {
-    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        "Erreur lors de la suppression du travail sur le serveur."
-      );
-    }
-
-    fileInputModal2.value = "";
-    deleteImageBtn.style.display = "none";
-  } catch (error) {
-    console.error(
-      "Erreur lors de la suppression du travail sur le serveur : " + error
-    );
-  }
-}
-
-trashButtons = document.querySelectorAll(".preview-delete-btn");
-
-trashButtons.forEach((trashButton, index) => {
-  trashButton.addEventListener("click", () => {
-    const galleryItem = trashButton.parentElement;
-
-    // Supprimez l'élément du DOM immédiatement
-    galleryItem.remove();
-
-    // Ensuite, envoyez la requête API pour supprimer le travail côté serveur
-    deleteWorkOnServer(worksData[index].id)
-      .then(() => {
-        // Traitez les données renvoyées par l'API
-        console.log("Travail supprimé avec succès.");
-      })
-      .catch((error) => {
-        console.error(
-          "Erreur lors de la suppression du travail sur le serveur : " + error
-        );
-      });
-  });
-});
-
 // dropdown
 const populateDropdown = async () => {
   try {
@@ -290,6 +241,7 @@ const emptyOption = document.querySelector("#empty-option");
 const modalGallery = document.querySelector(".gallery-modal");
 const galleryItem = document.querySelector(".div");
 const gallery = document.querySelector(".gallery");
+const modalContainer = document.querySelector(".modal-container");
 
 // Étape 3.3 : Envoi d’un nouveau projet au back-end via le formulaire de la modale
 // Gestionnaire d'événement pour le formulaire d'ajout de projet
@@ -317,9 +269,8 @@ formAddImg.addEventListener("submit", async (event) => {
       console.error("Aucun fichier sélectionné");
       return;
     }
-    console.log("fileInput:");
+
     try {
-      // Envoyez les données au serveur via une requête fetch
       const response = await fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
@@ -327,28 +278,32 @@ formAddImg.addEventListener("submit", async (event) => {
         },
         body: formData,
       });
-      console.log("postok");
-      if (response.ok) {
-        // Réinitialisez le formulaire et cachez la modale
 
+      if (response.ok) {
         modalAdd.style.display = "none";
-        console.log("file-input", fileInput.files[0]);
+
         if (fileInput.files.length > 0) {
-          // Vérifiez si un fichier a été sélectionné
+          const imageFile = fileInput.files[0];
+          const imageURL = URL.createObjectURL(imageFile);
           const newImage = document.createElement("img");
           newImage.alt = title;
           newImage.classList.add("item__imgModal");
-          console.log("fileInput ok");
-          if (fileInput.files[0] && fileInput.files[0].name) {
-            // Vérifiez si 'fileInput.files[0]' et 'fileInput.files[0].name' sont définis
-            newImage.src = fileInput.files[0].name;
-          } else {
-            console.error("Le fichier sélectionné n'a pas de nom.");
-          }
+          newImage.src = imageURL;
 
-          // Ajoutez newImage à la galerie principale
+          const galleryItem = document.createElement("div");
+          galleryItem.classList.add("img-modal");
+
+          const trashButton = createTrashSVG();
+          console.log(imageFile.name);
+          trashButton.id = imageFile.name; // Utilisez le nom de fichier comme identifiant
+          console.log("trash id");
+          galleryItem.appendChild(newImage);
+          galleryItem.appendChild(trashButton);
+          console.log("galleryItem", galleryItem);
+
+          // Ajoutez le galleryItem à la galerie
           const gallery = document.querySelector(".gallery");
-          gallery.appendChild(newImage);
+          gallery.appendChild(galleryItem);
 
           const modalGallery = document.querySelector(".gallery-modal");
           modalGallery.appendChild(newImage);
@@ -356,14 +311,12 @@ formAddImg.addEventListener("submit", async (event) => {
           console.error("Aucun fichier sélectionné");
         }
       } else {
-        // Gérez les erreurs en fonction de la réponse du serveur
         console.error("Erreur lors de l'envoi du projet au serveur.");
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi du projet au serveur : " + error);
     }
   }
-  formAddImg.reset();
 });
 
 // Ajoutez un gestionnaire d'événements aux champs d'entrée
@@ -381,6 +334,27 @@ function toggleButtonColor() {
     confirmButton.classList.remove("active");
   }
 }
+
+function resetModal2() {
+  const titleInput = document.querySelector("#titre");
+  const categorySelect = document.querySelector("#categorie");
+  const fileInput = document.querySelector("#file-input");
+  const imagePreview = document.querySelector("#preview");
+  const deleteImageBtn = document.querySelector("#js-delete-preview");
+  const confirmButton = document.querySelector(".confirm-button-form-add");
+
+  titleInput.value = ""; // Réinitialisez la valeur du champ de titre
+  categorySelect.value = ""; // Réinitialisez la valeur du champ de catégorie
+  fileInput.value = ""; // Réinitialisez la valeur du champ de fichier
+  imagePreview.style.display = "none"; // Masquez l'aperçu de l'image
+  deleteImageBtn.style.display = "none"; // Masquez le bouton de suppression de l'aperçu
+  confirmButton.classList.remove("active"); // Désactivez le bouton de confirmation si nécessaire
+}
+
+addButton.addEventListener("click", () => {
+  resetModal2(); // Réinitialisez le formulaire lorsque vous ouvrez la modale d'ajout de photo
+  modalAdd.style.display = "block";
+});
 
 // Fonction pour mettre à jour la modale 1 avec les dernières données
 function refreshModal1(worksData) {
@@ -409,4 +383,7 @@ function refreshModal1(worksData) {
     });
   });
 }
-refreshModal1(worksData);
+// Supposons que getWorksData est une fonction asynchrone qui récupère les données depuis un serveur
+getWorksData().then((worksData) => {
+  refreshModal1(worksData);
+});
