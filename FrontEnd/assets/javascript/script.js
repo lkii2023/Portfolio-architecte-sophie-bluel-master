@@ -14,12 +14,18 @@ const getWorksData = async () => {
       return worksData;
     } else {
       const response = await fetch("http://localhost:5678/api/works");
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+      }
+
       const data = await response.json();
       worksData = data;
+      renderMainGallery(worksData);
       return data;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -30,35 +36,7 @@ const getCategoriesData = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("error");
-  }
-};
-
-// Function to render the gallery
-const renderGallery = (items) => {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
-  items.forEach((item) => {
-    const galleryItem = document.createElement("div");
-    galleryItem.classList.add("box");
-    gallery.appendChild(galleryItem);
-    galleryItem.innerHTML = `
-      <img src="${item.imageUrl}" alt="${item.title}" class="item__img">
-      <h3 class="item__title">${item.title}</h3>
-    `;
-  });
-};
-
-// Function to filter works by category
-const filterWorksByCategory = async (category) => {
-  try {
-    const allData = await getWorksData();
-    const filteredData = allData.filter((data) =>
-      category === "Tous" ? true : data.categoryId === category.id
-    );
-    renderGallery(filteredData);
-  } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -84,3 +62,34 @@ Promise.all([getWorksData(), getCategoriesData()]).then(
     });
   }
 );
+
+// Function to generate HTML for a gallery item
+const generateGalleryItemHTML = (item) => `
+  <div class="box">
+    <img src="${item.imageUrl}" alt="${item.title}" class="item__img">
+    <h3 class="item__title">${item.title}</h3>
+  </div>
+`;
+
+// Function to render the gallery
+const renderGallery = (items) => {
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
+  items.forEach((item) => {
+    const galleryItemHTML = generateGalleryItemHTML(item);
+    gallery.innerHTML += galleryItemHTML;
+  });
+};
+
+// Function to filter works by category
+const filterWorksByCategory = async (category) => {
+  try {
+    const allData = await getWorksData();
+    const filteredData = allData.filter((data) =>
+      category === "Tous" ? true : data.categoryId === category.id
+    );
+    renderGallery(filteredData);
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -17,7 +17,7 @@
     <div class="modal-container">
       <div class="overlay">
         <div class="modal" id="modal1">
-          <button onclick="closeModal()" class="modal-close">
+          <button class="modal-close">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -33,14 +33,17 @@
               />
             </svg>
           </button>
-          <div class="modal-header">
-            <h2 class="modal-title">Galerie Photo</h2>
-          </div>
-          <div class="modal-body">
-            <div class="gallery-modal"></div>
-          </div>
-          <div class="modal-footer">
-            <button class="modal-button">Ajouter une photo</button>
+          <div class="modal-main">
+            <div class="modal-header">
+              <h2 class="modal-title">Galerie Photo</h2>
+            </div>
+            <div class="modal-body">
+              <div class="gallery-modal"></div>
+            </div>
+            <div class="modal-footer">
+              <div class="second-bar-modal"></div>
+              <button class="modal-button">Ajouter une photo</button>
+            </div>
           </div>
         </div>
 
@@ -118,13 +121,6 @@
                 style="display: none"
                 class="preview-img"
               />
-              <button
-                class="preview-delete-btn"
-                aria-label="delete"
-                id="js-delete-preview"
-              >
-                <img src="./assets/icons/trash.svg" alt="delete" />
-              </button>
             </div>
             <label for="titre">Titre</label>
             <input
@@ -336,5 +332,6 @@
     </footer>
     <script src="./assets/javascript/script.js"></script>
     <script src="./assets/javascript/admin.js"></script>
+    <script src="./assets/javascript/modal.js"></script>
   </body>
 </html>

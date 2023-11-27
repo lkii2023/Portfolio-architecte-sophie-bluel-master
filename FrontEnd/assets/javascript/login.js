@@ -13,9 +13,15 @@ form.addEventListener("submit", async (e) => {
 
   errorMessage.textContent = "";
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // Perform basic client-side validation
-  if (!email || !password) {
-    errorMessage.textContent = "Veuillez remplir tous les champs.";
+  if (!email || !isValidEmail(email) || !password) {
+    errorMessage.textContent =
+      "Veuillez saisir une adresse e-mail valide et remplir le mot de passe.";
     return;
   }
 
@@ -59,6 +65,7 @@ form.addEventListener("submit", async (e) => {
     }
   } catch (error) {
     console.error("Erreur lors de la connexion :", error);
+
     errorMessage.textContent =
       "Une erreur s'est produite. Veuillez réessayer ultérieurement.";
   }
