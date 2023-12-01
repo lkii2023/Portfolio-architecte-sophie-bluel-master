@@ -262,7 +262,7 @@ function renderModalGalleryItem(item) {
         );
       }
     } catch (error) {
-      console.error("Erreur lors de la suppression : " + error);
+      console.error(error);
     }
   });
 

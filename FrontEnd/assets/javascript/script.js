@@ -56,23 +56,27 @@ const setActiveButton = (button) => {
 // Initialize the gallery with all works and setup filtering
 Promise.all([getWorksData(), getCategoriesData()]).then(
   ([worksData, categories]) => {
-    const allCategoriesButton = document.querySelector("#all-filter");
-    const buttonsContainer = document.querySelector("#js-filter-box");
-    allCategoriesButton.addEventListener("click", () => {
-      renderGallery(worksData);
-      setActiveButton(allCategoriesButton);
-    });
-
-    categories.forEach((category) => {
-      const button = document.createElement("button");
-      button.innerText = category.name;
-      button.classList.add("button-filter");
-      button.addEventListener("click", () => {
-        filterWorksByCategory(category, worksData);
-        setActiveButton(button);
+    try {
+      const allCategoriesButton = document.querySelector("#all-filter");
+      const buttonsContainer = document.querySelector("#js-filter-box");
+      allCategoriesButton.addEventListener("click", () => {
+        renderGallery(worksData);
+        setActiveButton(allCategoriesButton);
       });
-      buttonsContainer.appendChild(button);
-    });
+
+      categories.forEach((category) => {
+        const button = document.createElement("button");
+        button.innerText = category.name;
+        button.classList.add("button-filter");
+        button.addEventListener("click", () => {
+          filterWorksByCategory(category, worksData);
+          setActiveButton(button);
+        });
+        buttonsContainer.appendChild(button);
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'initialisation de la galerie :", error);
+    }
   }
 );
 
@@ -86,10 +90,14 @@ const generateGalleryItemHTML = (item) => `
 
 // Function to render the gallery
 const renderGallery = (items) => {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
-  items.forEach((item) => {
-    const galleryItemHTML = generateGalleryItemHTML(item);
-    gallery.innerHTML += galleryItemHTML;
-  });
+  try {
+    const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = "";
+    items.forEach((item) => {
+      const galleryItemHTML = generateGalleryItemHTML(item);
+      gallery.innerHTML += galleryItemHTML;
+    });
+  } catch (error) {
+    console.error("Erreur lors du rendu de la galerie :", error);
+  }
 };

@@ -35,31 +35,53 @@ const logOut = () => {
 
 // Function to update the login/logout button
 const loginButtonUpdate = () => {
-  const loginButton = document.querySelector("#js-login-button");
+  try {
+    const loginButton = document.querySelector("#js-login-button");
 
-  if (isLogged()) {
-    loginButton.href = "#";
-    loginButton.innerText = "logout";
-    loginButton.addEventListener("click", () => {
-      logOut();
-      loginButton.innerText = "login";
-    });
+    if (isLogged()) {
+      loginButton.href = "#";
+      loginButton.innerText = "logout";
+      loginButton.addEventListener("click", () => {
+        try {
+          logOut();
+          loginButton.innerText = "login";
+        } catch (logoutError) {
+          console.error(logoutError);
+        }
+      });
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
-loginButtonUpdate();
+try {
+  loginButtonUpdate();
+} catch (updateError) {
+  console.error(updateError);
+}
 
 // Update the user interface based on the user's login status
 const updateUI = () => {
-  const filter = document.querySelector("#js-filter-box");
-  const editBar = document.querySelector("#js-banner");
-  const alignItems = document.querySelector("#introduction");
-  const buttonEditGallery = document.querySelector("#js-button-edit-gallery");
+  try {
+    const filter = document.querySelector("#js-filter-box");
+    const editBar = document.querySelector("#js-banner");
+    const alignItems = document.querySelector("#introduction");
+    const buttonEditGallery = document.querySelector("#js-button-edit-gallery");
 
-  if (isLogged()) {
-    filter.style.display = "none";
-    editBar.style.display = "flex";
-    alignItems.style.alignItems = "inherit";
-    buttonEditGallery.style.display = "inline-flex";
+    if (isLogged()) {
+      filter.style.display = "none";
+      editBar.style.display = "flex";
+      alignItems.style.alignItems = "inherit";
+      buttonEditGallery.style.display = "inline-flex";
+    }
+  } catch (uiError) {
+    console.error(uiError);
   }
 };
+
+try {
+  updateUI();
+} catch (updateUIError) {
+  console.error(updateUIError);
+}
