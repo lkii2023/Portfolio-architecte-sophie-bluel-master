@@ -1,4 +1,3 @@
-// Select form elements and error messages
 const form = document.getElementById("js-login-form");
 const emailInput = document.getElementById("js-email");
 const passwordInput = document.getElementById("js-password");

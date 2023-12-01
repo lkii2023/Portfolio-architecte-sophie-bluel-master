@@ -1,10 +1,3 @@
-// Function to set the active button
-const setActiveButton = (button) => {
-  const filterButtons = document.querySelectorAll(".button-filter");
-  filterButtons.forEach((btn) => btn.classList.remove("active"));
-  button.classList.add("active");
-};
-
 let worksData = [];
 
 // Function to fetch works data from the API
@@ -38,6 +31,26 @@ const getCategoriesData = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+// Function to filter works by category
+const filterWorksByCategory = async (category) => {
+  try {
+    const allData = await getWorksData();
+    const filteredData = allData.filter((data) =>
+      category === "Tous" ? true : data.categoryId === category.id
+    );
+    renderGallery(filteredData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Function to set the active button
+const setActiveButton = (button) => {
+  const filterButtons = document.querySelectorAll(".button-filter");
+  filterButtons.forEach((btn) => btn.classList.remove("active"));
+  button.classList.add("active");
 };
 
 // Initialize the gallery with all works and setup filtering
@@ -79,17 +92,4 @@ const renderGallery = (items) => {
     const galleryItemHTML = generateGalleryItemHTML(item);
     gallery.innerHTML += galleryItemHTML;
   });
-};
-
-// Function to filter works by category
-const filterWorksByCategory = async (category) => {
-  try {
-    const allData = await getWorksData();
-    const filteredData = allData.filter((data) =>
-      category === "Tous" ? true : data.categoryId === category.id
-    );
-    renderGallery(filteredData);
-  } catch (error) {
-    console.log(error);
-  }
 };

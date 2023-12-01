@@ -114,28 +114,6 @@ document
   .getElementById("file-input")
   .addEventListener("change", handleImagePreview);
 
-// dropdown
-const populateDropdown = async () => {
-  try {
-    const categories = await getCategoriesData();
-    const select = document.getElementById("categorie");
-
-    while (select.options.length > 1) {
-      select.remove(1);
-    }
-
-    categories.forEach((category) => {
-      const option = document.createElement("option");
-      option.value = category.id;
-      option.text = category.name;
-      select.add(option);
-    });
-  } catch (error) {
-    console.log("Erreur : Impossible de remplir le menu déroulant.");
-  }
-};
-populateDropdown();
-
 // Event handler for the project addition form
 formAddImg.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -182,6 +160,28 @@ formAddImg.addEventListener("submit", async (event) => {
     }
   }
 });
+
+// dropdown
+const populateDropdown = async () => {
+  try {
+    const categories = await getCategoriesData();
+    const select = document.getElementById("categorie");
+
+    while (select.options.length > 1) {
+      select.remove(1);
+    }
+
+    categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.text = category.name;
+      select.add(option);
+    });
+  } catch (error) {
+    console.log("Erreur : Impossible de remplir le menu déroulant.");
+  }
+};
+populateDropdown();
 
 titleInput.addEventListener("input", toggleButtonColor);
 categorySelect.addEventListener("input", toggleButtonColor);

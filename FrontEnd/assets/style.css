@@ -596,12 +596,15 @@ footer nav ul {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+/* second-bar-modal */
 .second-bar-modal {
   height: 1px;
   width: 100%;
   background: #b3b3b3;
   margin-block: 3.5%;
 }
+
 .backToGallery {
   width: fit-content;
   background: none;
@@ -615,6 +618,7 @@ footer nav ul {
 .back-to-gallery:hover {
   color: #b1663c;
 }
+
 .confirm-button-form-add {
   align-self: center;
   font-family: "Syne";
@@ -629,9 +633,9 @@ footer nav ul {
   color: white;
   border-radius: 2em;
   font-family: "Syne";
-
   cursor: pointer;
 }
+
 .confirm-button-form-add.active {
   background-color: #1d6154;
 }
@@ -690,10 +694,12 @@ footer nav ul {
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
 }
+
 .button-upload-photo:hover {
   background-color: #306685;
   color: white;
 }
+
 .drop-zone svg {
   width: 65px;
   height: auto;

@@ -28,7 +28,6 @@ window.addEventListener("load", () => {
 // Function to check if the user is logged in
 const isLogged = () => (token ? true : false);
 
-// Function to log the user out
 const logOut = () => {
   localStorage.removeItem("authToken");
   window.location.reload();
