@@ -7,14 +7,18 @@ function openModal() {
       renderModalGallery(worksData);
     };
 
-    const modalGallery = document.querySelector(".gallery-modal");
+    const modal = document.querySelector(".modal"); // Sélectionnez l'élément de la modal
 
-    renderGallery(worksData, modalGallery);
+    renderGallery(worksData);
 
     document.querySelector(".overlay").style.display = "block";
-    document.querySelector(".modal").classList.add("modal-open");
+    modal.classList.add("modal-open");
   });
 }
+
+document
+  .getElementById("js-button-edit-gallery")
+  .addEventListener("click", openModal);
 
 overlay.addEventListener("click", function (event) {
   if (event.target === overlay) {
@@ -81,9 +85,17 @@ const createTrashSVG = () => {
 };
 
 // modal2
+
 function backToGallery() {
   modalAdd.style.display = "none";
 }
+
+function closeModal2() {
+  document.querySelector(".overlay").style.display = "none";
+  modalAdd.style.display = "none";
+}
+
+document.querySelector(".modal-close-2").addEventListener("click", closeModal2);
 
 addButton.addEventListener("click", () => {
   modalAdd.style.display = "block";
@@ -94,25 +106,49 @@ backToPreviousModalButton.addEventListener("click", () => {
   modalPrevious.style.display = "block";
 });
 
-function handleImagePreview() {
-  const fileInput = document.getElementById("file-input");
-  const imagePreview = document.querySelector(".preview-img");
+// function for image management
+function handleImage(fileInput, imagePreview, textFormatImg) {
+  try {
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+      const allowedFormats = ["image/jpeg", "image/png"];
+      const maxFileSize = 4 * 1024 * 1024;
 
-  if (fileInput.files && fileInput.files[0]) {
-    const reader = new FileReader();
+      if (
+        allowedFormats.includes(fileInput.files[0].type) &&
+        fileInput.files[0].size <= maxFileSize
+      ) {
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = "block";
+          textFormatImg.textContent = "jpg, png : 4mo max";
+        };
 
-    reader.onload = function (e) {
-      imagePreview.src = e.target.result;
-      imagePreview.style.display = "block";
-    };
-
-    reader.readAsDataURL(fileInput.files[0]);
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        throw new Error("Le format de l'image ou la taille n'est pas valide.");
+      }
+    }
+  } catch (error) {
+    textFormatImg.textContent = error.message;
+    textFormatImg.style.display = "block";
+    imagePreview.style.display = "none";
+    imagePreview.src = "#";
   }
 }
 
+document.getElementById("file-input").addEventListener("change", function () {
+  const fileInput = document.getElementById("file-input");
+  const imagePreview = document.getElementById("preview");
+  const textFormatImg = document.getElementById("text-format-img");
+  handleImage(fileInput, imagePreview, textFormatImg);
+});
+
 document
-  .getElementById("file-input")
-  .addEventListener("change", handleImagePreview);
+  .querySelector(".button-upload-photo")
+  .addEventListener("click", function () {
+    document.getElementById("file-input").click();
+  });
 
 // Event handler for the project addition form
 formAddImg.addEventListener("submit", async (event) => {
@@ -201,12 +237,15 @@ function resetForm() {
   const fileInput = document.querySelector("#file-input");
   const imagePreview = document.querySelector("#preview");
   const confirmButton = document.querySelector(".confirm-button-form-add");
+  const textFormatImg = document.getElementById("text-format-img");
 
   titleInput.value = "";
   categorySelect.value = "";
   fileInput.value = "";
   imagePreview.style.display = "none";
   confirmButton.classList.remove("active");
+
+  textFormatImg.textContent = "jpg, png : 4mo max";
 }
 
 addButton.addEventListener("click", () => {

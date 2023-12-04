@@ -14,7 +14,7 @@ const getWorksData = async () => {
 
       const data = await response.json();
       worksData = data;
-      renderMainGallery(worksData);
+      renderGallery(worksData);
       return data;
     }
   } catch (error) {

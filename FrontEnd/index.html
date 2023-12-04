@@ -48,11 +48,7 @@
         </div>
 
         <div class="modal" id="modal2">
-          <button
-            id="backToGallery"
-            onclick="backToGallery()"
-            class="modal-previous"
-          >
+          <button id="backToGallery" class="modal-previous">
             <svg
               width="21"
               height="15"
@@ -66,7 +62,7 @@
               />
             </svg>
           </button>
-          <button onclick="closeModal()" class="modal-close">
+          <button class="modal-close-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -106,11 +102,7 @@
                 name="image"
                 style="display: none"
               />
-              <button
-                type="button"
-                onclick="document.getElementById('file-input').click();"
-                class="button-upload-photo"
-              >
+              <button type="button" class="button-upload-photo">
                 + Ajouter photo
               </button>
               <p id="text-format-img">jpg, png : 4mo max</p>
@@ -214,11 +206,7 @@
       <section id="portfolio">
         <div class="wrapper-title">
           <h2>Mes Projets</h2>
-          <button
-            onclick="openModal()"
-            class="button-admin"
-            id="js-button-edit-gallery"
-          >
+          <button class="button-admin" id="js-button-edit-gallery">
             <img
               src="./assets/icons/edit.png"
               alt="pencil"

@@ -463,23 +463,20 @@ footer nav ul {
   z-index: 1000;
 }
 
-.modal-close {
+.modal-close,
+.modal-close-2 {
   position: absolute;
   top: 8px;
   right: 8px;
   cursor: pointer;
-  transition: 0.3s all ease-in-out;
   border: none;
   background-color: white;
 }
 
-.modal-close svg {
+.modal-close svg,
+.modal-close-2 svg {
   width: 20px;
   height: 20px;
-}
-
-.modal-close:hover {
-  transform: rotate(180deg);
 }
 
 .modal-title {
